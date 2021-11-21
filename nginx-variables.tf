@@ -7,7 +7,8 @@ variable "nginx_app_name" {
 
 variable "nginx_app_image" {
   description = "Docker image to run in the ECS cluster"
-  default     = "nginx:latest"
+  default     = "docker.io/nginxdemos/hello"
+
 }
 
 variable "nginx_app_port" {
