@@ -127,3 +127,9 @@ output "nginx_dns_lb" {
   description = "DNS load balancer"
   value       = aws_alb.main.dns_name
 }
+
+output "application_url" {
+  description = "Application Url"
+  value       = var.domain
+}
+

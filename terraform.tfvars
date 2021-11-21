@@ -3,8 +3,6 @@ app_name        = "nginxdemo" # Do NOT enter any spaces
 app_environment = "test" # Dev, Test, Prod, etc
 
 #AWS authentication variables
-aws_key_pair_name = "ecs-nginx"
-aws_key_pair_file = "ecs-nginx.pem"
 aws_region        = "us-east-1"
 
 # Application access

@@ -3,18 +3,6 @@ resource "aws_ecs_cluster" "aws-ecs" {
   name = var.app_name
 }
 
-data "aws_caller_identity" "current" {}
-
-
-# # ec2 user data for hard drive
-# data "template_file" "user_data_cluster" {
-#   template = file("templates/cluster_user_data.sh")
-#   vars = {
-#     ecs_cluster = aws_ecs_cluster.aws-ecs.name
-#   }
-# }
-
-
 # create security group and segurity rules for the ecs cluster
 resource "aws_security_group" "ecs-cluster-host" {
   name        = "${var.app_name}-ecs-cluster-host"
