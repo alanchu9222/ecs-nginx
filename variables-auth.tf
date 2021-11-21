@@ -1,6 +1,3 @@
-
-
-
 variable "aws_key_pair_name" {
   type = string
   description = "AWS key pair name"

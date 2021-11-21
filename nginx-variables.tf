@@ -1,16 +1,5 @@
 # nginx container - nginx-variables.tf
 
-variable "domain" {
-  description = "App domain"
-  default     = "hello.alanchu.click"
-}
-
-variable "route53_zone_id" {
-  description = "App domain"
-  default     = "Z0170635D82FWVW9RPB3"
-}
-
-
 variable "nginx_app_name" {
   description = "Name of Application Container"
   default     = "nginx"
