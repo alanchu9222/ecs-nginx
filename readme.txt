@@ -1,3 +1,12 @@
+Features implemented
+1. VPC and networking
+2. High availability and scalability
+3. Terraform scripts to provision the infrastructure
+4. URL = `hello.alanchu.click`
+5. Github action 1: terraform plan when submitting a pull request from a feature branch
+6. Github action 2: terraform apply when merging feature branch to main
+7. Web application served via HTTPS
+
 External dependencies for this project
 1. SSL Certificate
 2. ACM certificate Domain
@@ -5,11 +14,10 @@ External dependencies for this project
 4. AWS credentials
 5. AWS region
 
-Please update the associated variables in the
-variables-app.tf file to suit your environment.
 
-For example replace the following variables.
+The above settings can be found at variables-app.tf
 
+For example:
 variable "domain" {
   description = "App domain"
   default     = "hello.alanchu.click"
