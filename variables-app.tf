@@ -6,12 +6,12 @@ variable "domain" {
 }
 
 variable "route53_zone_id" {
-  description = "App domain"
+  description = "Zone Id"
   default     = "Z0170635D82FWVW9RPB3"
 }
 
 variable "acm_cert_domain" {
-  description = "App domain"
+  description = "ACM certificate domain"
   default     = "*.alanchu.click"
 }
 
