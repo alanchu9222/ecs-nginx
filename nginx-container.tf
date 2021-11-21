@@ -31,7 +31,10 @@ resource "aws_ecs_service" "nginx_app" {
   cluster         = aws_ecs_cluster.aws-ecs.id
   task_definition = aws_ecs_task_definition.nginx_app.arn
   desired_count   = var.nginx_app_count
-  launch_type     = "FARGATE"
+  deployment_minimum_healthy_percent = 50
+  deployment_maximum_percent         = 200
+  launch_type                        = "FARGATE"
+  scheduling_strategy                = "REPLICA"
 
   network_configuration {
     security_groups  = [aws_security_group.aws-ecs-tasks.id]
@@ -52,4 +55,3 @@ resource "aws_ecs_service" "nginx_app" {
   }
 }
 
- 
