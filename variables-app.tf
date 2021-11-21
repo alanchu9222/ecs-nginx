@@ -10,6 +10,11 @@ variable "route53_zone_id" {
   default     = "Z0170635D82FWVW9RPB3"
 }
 
+variable "acm_cert_domain" {
+  description = "App domain"
+  default     = "*.alanchu.click"
+}
+
 variable "aws_region" {
   type = string
   description = "AWS region"

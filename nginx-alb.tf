@@ -60,7 +60,7 @@ resource "aws_alb_listener" "http" {
 
 
 data "aws_acm_certificate" "click" {
-  domain      = "*.alanchu.click"
+  domain      = var.acm_cert_domain
   types       = ["AMAZON_ISSUED"]
   most_recent = true
 }
