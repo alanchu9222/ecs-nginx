@@ -1,11 +1,23 @@
 # Define Application Load Balancer - alb.tf
-
 resource "aws_alb" "main" {
   name            = "${var.nginx_app_name}-load-balancer"
   subnets         = aws_subnet.aws-subnet.*.id
   security_groups = [aws_security_group.aws-lb.id]
   tags = {
     Name = "${var.app_name}-alb"
+  }
+}
+
+# Route53
+resource "aws_route53_record" "subdomain" {
+  zone_id = var.route53_zone_id
+  name    = var.domain
+  type    = "A"
+
+  alias {
+    name                   = aws_alb.main.dns_name
+    zone_id                = aws_alb.main.zone_id
+    evaluate_target_health = true
   }
 }
 
@@ -30,17 +42,43 @@ resource "aws_alb_target_group" "nginx_app" {
   }
 }
 
-# Redirect all traffic from the ALB to the target group
-resource "aws_alb_listener" "front_end" {
+resource "aws_alb_listener" "http" {
   load_balancer_arn = aws_alb.main.id
   port              = var.nginx_app_port
   protocol          = "HTTP"
+
+  default_action {
+   type = "redirect"
+
+   redirect {
+     port        = 443
+     protocol    = "HTTPS"
+     status_code = "HTTP_301"
+   }
+  }
+}
+
+
+data "aws_acm_certificate" "click" {
+  domain      = "*.alanchu.click"
+  types       = ["AMAZON_ISSUED"]
+  most_recent = true
+}
+
+resource "aws_alb_listener" "alb_listener" {
+  load_balancer_arn = aws_alb.main.id
+  port              = "443"
+  protocol          = "HTTPS"
+  depends_on        = [aws_alb_target_group.nginx_app]
+  ssl_policy      = "ELBSecurityPolicy-2016-08"
+  certificate_arn = data.aws_acm_certificate.click.arn
 
   default_action {
     target_group_arn = aws_alb_target_group.nginx_app.id
     type             = "forward"
   }
 }
+
 
 resource "aws_appautoscaling_target" "ecs_target" {
   max_capacity       = 4
@@ -82,6 +120,7 @@ resource "aws_appautoscaling_policy" "ecs_policy_cpu" {
    target_value       = 60
   }
 }
+
 
 # output nginx public ip
 output "nginx_dns_lb" {

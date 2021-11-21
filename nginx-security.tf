@@ -13,6 +13,12 @@ resource "aws_security_group" "aws-lb" {
     cidr_blocks = var.app_sources_cidr
   }
 
+  ingress {
+   protocol     = "tcp"
+   from_port    = 443
+   to_port      = 443
+   cidr_blocks  = var.app_sources_cidr
+  }
 
   egress {
     protocol    = "-1"

@@ -48,7 +48,7 @@ resource "aws_ecs_service" "nginx_app" {
     container_port   = var.nginx_app_port
   }
 
-  depends_on = [aws_alb_listener.front_end]
+  depends_on = [aws_alb_listener.alb_listener]
 
    tags = {
     Name = "${var.nginx_app_name}-nginx-ecs"
